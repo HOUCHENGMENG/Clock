@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.1em; 
+            font-size:  20vmin;
+            align-items: flex-end;
+        }
+        .time {
+            background-color: #0f0f0f;
+            color: #b7b7b7;
+            text-align: center;
+            border-radius: 5px;
+        }
+        .hour, .minute {
+            font-weight: 500;
+            font-size: 1em;
+            width: 1.5em;
+            height: 1.5em;
+            line-height: 1.5em;
+            position: relative;
+            padding: 0;
+        }
+        .second {
+            font-weight: 400;
+            font-size: 0.5em;
+            width: 1.5em;
+            height: 1.5em;
+            line-height: 1.5em;
+        }
+        .hour > span {
+            font-size: 0.2em;
+            position: absolute;
+            top: -2.5em;
+            left: 0.7em;
+        }
+    </style>
+</head>
+<body>
+    <!-- <div class="box">
+        <p class="hour time"><span>PM</span>6</p>
+        <p class="minute time">33</p>
+        <p class="second time">01</p>
+    </div> -->
+    <script>
+        let box = document.createElement("div")
+        box.className = "box"
+        document.body.append(box)
+        function render() {
+            const hour = new Date().getHours()
+            let minute = new Date().getMinutes()
+            let second = new Date().getSeconds()
+            if (second < 10) {
+                second = `0${second}`
+            }
+            if (minute < 10) {
+                minute = `0${minute}`
+            }
+            if (hour > 12 && hour < 24) {
+                box.innerHTML= `
+                <p class="hour time"><span>PM</span>${hour - 12}</p>
+                <p class="minute time">${minute}</p>
+                <p class="second time">${second}</p>
+                `
+            } else if (hour == 24) {
+                box.innerHTML= `
+                <p class="hour time"><span>AM</span>0</p>
+                <p class="minute time">${minute}</p>
+                <p class="second time">${second}</p>
+                `
+            } else {
+                box.innerHTML= `
+                <p class="hour time"><span>AM</span>${hour}</p>
+                <p class="minute time">${minute}</p>
+                <p class="second time">${second}</p>
+                `
+            }
+        }
+        render()
+        setInterval(render, 1000)
+    </script>
+</body>
+</html>
